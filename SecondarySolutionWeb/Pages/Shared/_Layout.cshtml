@@ -1,0 +1,121 @@
+﻿@inject UserManager<ApplicationUser> userManager
+@inject ApplicationDbContext dbContext
+@{
+    string path = "";
+    var user = await userManager.GetUserAsync(User);
+    var student = dbContext.StudentTable.FirstOrDefault(j => j.ApplicationUserId == user.Id);
+    if (student != null)
+    {
+        if (!string.IsNullOrEmpty(student.Passport))
+        {
+            path = "https://www.admin.aggocollegemkd.com.ng"+student.Passport;
+        }
+        else
+        {
+            if (student.Gender == "Male")
+            {
+                path = "/image/avatar2.png";
+            }
+            else{path = "/image/avata.jpg";}
+                
+        }
+    }
+    else
+    {
+        if (student?.Gender == "Male")
+        {
+            path = "/image/avatar2.png";
+        }
+        else { path = "/image/avata.jpg"; }
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Aggo College Makurdi</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
+
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link href="~/app-assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SecondarySolutionWeb.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Sheets", required: false)
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light" border-bottom box-shadow mb-3 fixed-top">
+            <div class="container bg-body-secondary">
+            <a class="navbar-brand text-dark" asp-area="" asp-page="/Index"><img src="~/image/appicons/logo-one.jpg" class="rounded-circle" width="50px" />
+                <strong> Aggo College Mkd</strong>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link  @Html.ActiveClass("/Account/Profile-Data")" asp-area="" asp-page="/Account/Profile-Data">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link  @Html.ActiveClass("/Payments/Fees-Payment")" asp-area="" asp-page="/Payments/Fees-Payment">Fees history</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link  @Html.ActiveClass("/Payments/PTA-Payment")" asp-area="" asp-page="/Payments/PTA-Payment">PTA history</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link  @Html.ActiveClass("/Payments/Other-Payment")" asp-area="" asp-page="/Payments/Other-Payment">Other Payments</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="navbar-nav dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="@(path)" class="img-fluid rounded rounded-circle" width="40px" />
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item @Html.ActiveClass("/Account/Profile-Data")" asp-page="/Account/Profile-Data">Profile</a></li>
+                                <li><a class="dropdown-item @Html.ActiveClass("/Payments/Fees-Payment")" asp-page="/Payments/Fees-Payment">Fees history</a></li>
+                                <li><a class="dropdown-item @Html.ActiveClass("/Payments/PTA-Payment")" asp-page="/Payments/PTA-Payment">PTA history</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form method="post" asp-action="Logout" asp-controller="api">
+                                        <button class="dropdown-item" type="submit">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container bg-body-tertiary" ">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <div class="container bg-body-secondary">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <img src="/image/appicons/favicon-32x32.png" class="rounded-circle" width="30" height="24" />
+                </a>
+                <span class="text-dark">&copy; @DateTime.Now.Year Aggo College Makurdi</span>
+            </div>
+
+            <div class="form-inline col-md-8">
+                <div class="col text-dark d-flex justify-content-end "><strong>Designed & Manage By:</strong> The Return Tech - <a href="tel:08039410863" class="text-decoration-none">08039410863</a></div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

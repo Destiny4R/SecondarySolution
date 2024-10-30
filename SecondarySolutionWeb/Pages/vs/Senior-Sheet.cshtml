@@ -1,0 +1,436 @@
+﻿@page
+@model SecondarySolutionWeb.Pages.vs.Senior_SheetModel
+@{
+	Layout = null;
+	ViewData["title"] = Model.Studentsdata.SurName + " " + Model.Studentsdata.FirstName;
+	int sn = 0;
+	string path = "";
+	if (!string.IsNullOrEmpty(Model.Studentsdata.Passport))
+	{
+		path = "https://www.admin.aggocollegemkd.com.ng/" + Model.Studentsdata.Passport;
+	}
+	else
+	{
+		if (Model.Studentsdata.Gender == "Male")
+		{
+			path = "/image/avatar2.png";
+		}
+		else { path = "/image/avata.jpg"; }
+
+	}
+}
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>
+		@ViewData["title"]|| AGGO COLLEGE MAKURDI SSS RESULT
+	</title>
+	<link rel="shortcut icon" href="/image/favicon.ico">
+	<link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="watermark-container">
+		<div class="watermark">AGGO COLLEGE MAKURDI</div>
+		<table width="100%">
+			<tr>
+				<td><img class="rounded-circle" src="/image/appicons/logo-one.jpg" width="120" height="120" /></td>
+				<td>
+					<div class="getfont">
+						<div class="text-center">
+							<p class="h3"><strong>AGGO COLLEGE MAKURDI</strong></p>
+							<p class="h4">ABU KING SHULUWA ROAD, MAKURDI,</p>
+							<p class="h4">BENUE STATE, NIGERIA</p>
+							<p class="h6"><strong>MOTO:</strong> EDUCATION FOR PROGRESS</p>
+							<div class="d-flex justify-content-between"><div><strong>EMAIL:</strong> info@aggocollegemkd.com.ng </div> <div><strong>Tel:</strong> 08059968472</div></div>
+						</div>
+					</div>
+				</td>
+				<td><img class="float-end rounded-circle" src="@(path)" width="120" height="120" /></td>
+			</tr>
+			<tr>
+				<td colspan="3" class="">
+					<table class="table-bordered border-primary table-sm" width="100%">
+						<tr>
+							<td>
+								<strong>Student Name:</strong> <label class="getfontname">@(Model.Studentsdata.SurName + " " + Model.Studentsdata.OtherName + " " + Model.Studentsdata.FirstName)</label>
+							</td>
+							<td>
+								<strong>Sex:</strong> <label class="getfontname">@(Model.Studentsdata.Gender)</label>
+							</td>
+							<td>
+								<strong>Age:</strong> <label class="getfontname">@(DateTime.Now.Year - Model.Studentsdata.DateOfBirth.Year)</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<strong>Student Reg. No.:</strong> <label class="getfontname">@(Model.Studentsdata.StudentRegNo)</label>
+							</td>
+							<td>
+								<strong>Class:</strong> <label class="getfontname">@(Model._generalClass.Classcchool.Name + " - " + Model._generalClass.SubClasses.Name)</label>
+							</td>
+							<td>
+								<strong>Session/Year:</strong> <label class="getfontname">@(Model._generalClass.SessionYear.Name)</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<strong>No.In Class:</strong> <label class="getfontname">@(Model.NoInClass)</label>
+							</td>
+							<td>
+								<strong>Attendance:</strong> <label class="getfontname">@(Model._remarkPosition.Student_Attendance)</label>
+							</td>
+							<td>
+								<strong>Days School Opened:</strong> <label class="getfontname">@(Model._generalClass.TotalAttendance)</label>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<table class="table-bordered border-primary table-sm" width="100%">
+			<tbody>
+				<tr>
+					<td colspan="14" class="bg-warning">
+						<div class="text-center h6">TERMLY CONTINUOUS ASSESSMENT DOSSIER FOR SENIOR SECONDARY SCHOOLS</div>
+					</td>
+				</tr>
+				<tr>
+					<td rowspan="2" class="text-center"><strong>@(Model._generalClass.Term)&ensp; Term</strong></td>
+					<td colspan="4" class="text-center">Summary of Cont. Assmt</td>
+					<td rowspan="3" class="rotate-upward text-center">Terminal Exam (70)</td>
+					<td rowspan="3" class="rotate-upward text-center">Total Scores(100)</td>
+					<td rowspan="3" class="rotate-upward text-center">Class Average</td>
+					<td rowspan="3" class="rotate-upward text-center">Highest in Class</td>
+					<td rowspan="3" class="rotate-upward text-center">Lowest in Class</td>
+					<td rowspan="3" class="rotate-upward text-center">Position</td>
+					<td rowspan="3" class="rotate-upward text-center">Grade</td>
+					<td rowspan="3">Remark</td>
+					<td rowspan="@(5+Model.CollectDatas.Count())" width="15%">
+						<table class=" border-warning table-bordered  text-center">
+							<tr>
+								<td colspan="2" class="bg-info text-center text-center">Affective Development</td>
+							</tr>
+							<tr>
+								<th>Traits</th>
+								<th>Rating(1-5)</th>
+							</tr>
+							<tr>
+								<td>Attentiveness</td>
+								<td>@(Model.termReg.StudentRatings.Attentiveness)</td>
+							</tr>
+							<tr>
+								<td>Attendance</td>
+								<td>@(Model.termReg.StudentRatings.Attendance)</td>
+							</tr>
+							<tr>
+								<td>Reliability</td>
+								<td>@(Model.termReg.StudentRatings.Reliability)</td>
+							</tr>
+							<tr>
+								<td>Punctuality</td>
+								<td>@(Model.termReg.StudentRatings.Punctuality)</td>
+							</tr>
+							<tr>
+								<td>Perseverance</td>
+								<td>@(Model.termReg.StudentRatings.Perseverance)</td>
+							</tr>
+							<tr>
+								<td>Neatness</td>
+								<td>@(Model.termReg.StudentRatings.Neatness)</td>
+							</tr>
+							<tr>
+								<td>Sense Of Responsibility</td>
+								<td>@(Model.termReg.StudentRatings.Sense_of_Responsibility)</td>
+							</tr>
+							<tr>
+								<td>Politeness</td>
+								<td>@(Model.termReg.StudentRatings.Politeness)</td>
+							</tr>
+							<tr>
+								<td>Spirit of Coop.</td>
+								<td>@(Model.termReg.StudentRatings.Spirit_of_Cooperation)</td>
+							</tr>
+							<tr>
+								<td>Self  Control</td>
+								<td>@(Model.termReg.StudentRatings.SelfControl)</td>
+							</tr>
+							<tr>
+								<td>Relationship With Student</td>
+								<td>@(Model.termReg.StudentRatings.Relationship_With_Student)</td>
+
+							<tr>
+								<td>Relationship with Staff</td>
+								<td>@(Model.termReg.StudentRatings.Relation_With_Staff)</td>
+							</tr>
+							<tr>
+								<td>Curiosity</td>
+								<td>@(Model.termReg.StudentRatings.Curiosity)</td>
+							</tr>
+							<tr>
+								<td>Initiative</td>
+								<td>@(Model.termReg.StudentRatings.Initiative)</td>
+							</tr>
+							<tr>
+								<td>Honesty</td>
+								<td>@(Model.termReg.StudentRatings.Honesty)</td>
+							</tr>
+							<tr>
+								<td>Industry</td>
+								<td>@(Model.termReg.StudentRatings.Industry)</td>
+							</tr>
+							<tr>
+								<td>Humility</td>
+								<td>@(Model.termReg.StudentRatings.Humility)</td>
+							</tr>
+							<tr>
+								<td>Organisational Ability</td>
+								<td>@(Model.termReg.StudentRatings.Organisational_Ability)</td>
+							</tr>
+							<tr>
+								<td>Tolanrance</td>
+								<td>@(Model.termReg.StudentRatings.Tolanrance)</td>
+							</tr>
+							<tr>
+								<td>Leadership</td>
+								<td>@(Model.termReg.StudentRatings.Leadership)</td>
+							</tr>
+							<tr>
+								<td>Respect for Others</td>
+								<td>@(Model.termReg.StudentRatings.Respect_For_Other)</td>
+							</tr>
+							<tr>
+								<td>Courage</td>
+								<td>@(Model.termReg.StudentRatings.Courage)</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td rowspan="2" class="rotate-upward text-center">Assignment(5)</td>
+					<td rowspan="2" class="rotate-upward text-center">Class Work(5)</td>
+					<td rowspan="2" class="rotate-upward text-center">Project(10)</td>
+					<td rowspan="2" class="rotate-upward text-center">Test(10)</td>
+				</tr>
+				<tr>
+					<td rowspan="1" class="text-center"><h4><span class="badge bg-primary">Subject</span></h4></td>
+				</tr>
+				@foreach (var item in Model.CollectDatas)
+				{
+					sn++;
+					<tr class="@(SD.colorful(sn)) text-center table table-bordered border-primary">
+						<td>@(item.SujectName)</td>
+						<td>
+							@{
+								string ass = "";
+								if (item.Assgmnt == 0.0)
+								{
+									ass = "=";
+								}
+								else
+								{
+									ass = item.Assgmnt.ToString();
+								}
+							}
+							@(ass)
+						</td>
+						<td>
+							@{
+								string cwork = "";
+								if (item.CWork == 0.0)
+								{
+									cwork = "--";
+								}
+								else
+								{
+									cwork = item.CWork.ToString();
+								}
+							}
+							@(cwork)
+						</td>
+						<td>
+							@{
+								string project = "";
+								if (item.project == 0.0)
+								{
+									project = "--";
+								}
+								else
+								{
+									project = item.project.ToString();
+								}
+							}
+							@(project)
+						</td>
+						<td>
+							@{
+								string test = "";
+								if (item.Test == 0.0)
+								{
+									test = "--";
+								}
+								else
+								{
+									test = item.Test.ToString();
+								}
+							}
+							@(test)
+						</td>
+						<td>
+							@{
+								string exam = "";
+								if (item.Exams == 0.0)
+								{
+									exam = "--";
+								}
+								else
+								{
+									exam = item.Exams.ToString();
+								}
+							}
+							@(exam)
+						</td>
+						<td>@(item.TotalScores)</td>
+						<td>@(item.Average)</td>
+						<td>@(item.Highest)</td>
+						<td>@(item.Lowest)</td>
+						<td>@(item.Position)<sup>@(SD.specialNumber(item.Position))</sup></td>
+						<td>@(item.Grade)</td>
+						<td>@(item.Remark)</td>
+					</tr>
+				}
+				<tr>
+					<td colspan="13">
+						<table width="100%" class="table-bordered border-primary">
+							<tr>
+								<td colspan="4"><strong>No. Of Subjects:</strong>&emsp;<label class="getfontname">@(Model.CollectDatas.Count())</label></td>
+								<td colspan="4"><strong>Total Obtainable Marks:</strong>&emsp;<label class="getfontname">@(Model.CollectDatas.Count() * 100)</label></td>
+								<td colspan="4"><strong>Marks Obtained:</strong>&emsp;<label class="getfontname">@(Model.ToTalScore)</label></td>
+							</tr>
+							<tr>
+								<td colspan="4"><strong>Average:</strong>&emsp;<label class="getfontname">@(Math.Round(Model.ToTalScore / Model.CollectDatas.Count(), 2))</label></td>
+								<td colspan="4"><strong>Position In Class</strong>&emsp;<label class="getfontname">@(Model.Position)<sup>@(SD.specialNumber(Model.Position))</sup></label></td>
+								<td colspan="4"><strong>Out of</strong>&emsp;<label class="getfontname">@(Model.NoInClass)</label></td>
+							</tr>
+							<tr>
+								<th colspan="3">Principal's Name:</th>
+								<td colspan="9">@(Model._generalClass.ClassTeacher)</td>
+							</tr>
+							<tr>
+								<th colspan="3">Class Teacher's Name:</th>
+								<td colspan="9">@(Model._generalClass.ClassTeacher)</td>
+							</tr>
+							<tr>
+								<th colspan="3">Principal's Remarks:</th>
+								<td colspan="9">@(Model._remarkPosition.Principal_Remark)</td>
+							</tr>
+							<tr>
+								<th colspan="3">Class Teacher's Remarks:</th>
+								<td colspan="9">@(Model._remarkPosition.General_Remark)</td>
+							</tr>
+							<tr>
+								<td colspan="3"><strong>Principal's Signature</strong></td>
+								<td colspan="9">
+									<img src="/image/appicons/s3.jpg" width="70px" />
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<table class="table-bordered border-warning" width="50%">
+							<tr class="mt-2">
+								<td colspan="2" class="bg-info text-dark bg-opacity-50 text-center">Psychomotor Skills</td>
+							</tr>
+							<tr>
+								<td>Handwriting</td>
+								<td>@(Model.termReg.StudentRatings.Handwriting)</td>
+							</tr>
+							<tr>
+								<td>Fluecy</td>
+								<td>@(Model.termReg.StudentRatings.Fluecy)</td>
+							</tr>
+							<tr>
+								<td>Drawing/Painting</td>
+								<td>@(Model.termReg.StudentRatings.Drawing_Painting)</td>
+							</tr>
+							<tr>
+								<td>Games/Sport</td>
+								<td>@(Model.termReg.StudentRatings.Games_Sport)</td>
+							</tr>
+							<tr>
+								<td>W/Shop Tools</td>
+								<td>@(Model.termReg.StudentRatings.Handing_WShop_Tool)</td>
+							</tr>
+							<tr>
+								<td>Musical Skills</td>
+								<td>@(Model.termReg.StudentRatings.Musical_Skill)</td>
+							</tr>
+							<tr>
+								<td>Constrution</td>
+								<td>@(Model.termReg.StudentRatings.Constrution)</td>
+							</tr>
+						</table>
+					</td>
+					<td colspan="4">
+						<table class="table-bordered border-warning p-0" width="100%">
+							<tr><td colspan="2" class="bg-info text-dark bg-opacity-50 text-center">KEYS TO RATING</td></tr>
+							<tr>
+								<td>5</td>
+								<td>Excellent</td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>Very Good</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>Good</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Fair</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>Poor</td>
+							</tr>
+						</table>
+					</td>
+					<td colspan="6">
+						<table class="table-bordered border-warning p-0" width="100%">
+							<tr><td colspan="2" class="bg-info text-dark bg-opacity-50 text-center">NEXT TERM INFORMATION</td></tr>
+							<tr>
+								<td>Next Term Fees</td>
+								<td><strong>@(SD.ToNaira(Model._generalClass.Next_Term_Fees))</strong></td>
+							</tr>
+							<tr>
+								<td>Next Term Start</td>
+								<td>@(Model._generalClass.NextTermStart.ToShortDateString())</td>
+							</tr>
+							<tr>
+								<td>Next Term End</td>
+								<td>@(Model._generalClass.TermEnd.ToShortDateString())</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="14">
+						<div class="desieze3"><strong>KEY TO GRADING</strong>&nbsp; Final Assessment(A - Distinction; B - Very Good; C - Good; D - Fair; E - Poor;)</div>
+						<div class="d-flex justify-content-between">
+							<div class="desieze3">75 and above = A; 65 - 74 = B; 55 - 64 = C; 40 - 54 = D; 39 and below = E;</div>
+							<div class="h6"><strong style="font:italic;">Designed and Managed By: The Return Tech - </strong><a class="text-decoration-none" href="tel:08039410863">08039410863</a></div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/watermark.js"></script>
+</body>
+</html>

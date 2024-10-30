@@ -1,0 +1,172 @@
+﻿@page
+@model SecondarySolutionWeb.Pages.Account.Profile_DataModel
+@{
+    ViewData["Title"] = "Student Profile";
+    var path = "";
+    if (string.IsNullOrEmpty(Model.student.Passport))
+    {
+        if (Model.student.Gender == "Male")
+        {
+            path = "/image/avatar2.png";
+        }
+        else
+            path = "/image/avata.jpg";
+    }
+    else
+    {
+        path = "https://www.admin.aggocollegemkd.com.ng/" + Model.student.Passport;
+    }
+}
+<section style="background-color: #eee;">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="bg-body-tertiary rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Student Profile</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="@(path)" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;" />
+                        <div class="my-3 h5 getfontname2 text-dark">@(Model.student.SurName + ", " + Model.student.OtherName + " " + Model.student.FirstName)</div>
+                        <p class="text-dark mb-1 fontz">@(Model.student.StudentRegNo)</p>
+                        <p class="text-primary mb-4">Created: @(Model.student.CreateDate.ToLongDateString())</p>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <div class="text-primary font-italic me-1 h4 text-uppercase text-center">Student Profile</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Admission Number:</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@(Model.student.StudentRegNo)</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Full Name:</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@(Model.student.SurName + ", " + Model.student.OtherName + " " + Model.student.FirstName)</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Gender:</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@(Model.student.Gender)</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Date of Birth:</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@(Model.student.DateOfBirth.ToShortDateString())</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">State:</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@(Model.student.State)</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Local Government:</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@(Model.student.LocalGov)</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Address:</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@(Model.student.Address)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (Model?.parent != null)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card mb-4 mb-md-0">
+                                <div class="card-header">
+                                    <div class="text-primary font-italic me-1 h4 text-uppercase text-center">Parent/Gaurdian Information</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Full Name:</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input class="text-muted mb-0 form-control" value="@(Model.parent.ParentTable.Name)" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Phone Number:</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input class="text-muted mb-0 form-control" value="@(Model.parent.ParentTable.PhoneNumber)" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Relationship:</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input class="text-muted mb-0 form-control" value="@(Model.parent.ParentTable.Relationship)" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Occupation:</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input class="text-muted mb-0 form-control" value="@(Model.parent.ParentTable.Occupation)" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Address:</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">@(Model.parent.ParentTable.Address)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
